@@ -26,7 +26,7 @@ namespace Services
             IPInformation ipInfo = null;
 
             if(!ValidIP(ip))
-                throw new Exception();
+                throw new Exception("La IP es invalida");
 
             var value = await _cacheService.GetCacheValueAsync(ip);
             if (value == null)
@@ -34,7 +34,7 @@ namespace Services
                 var geo = await _geolocalizacionService.Get(ip);
 
                 if(geo == null || geo.CountryName == null) 
-                    throw new Exception();
+                    throw new Exception("No hay información de la ip");
                 
                 ipInfo = await InstanceIPInformationFromService(geo);
             }
